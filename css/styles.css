@@ -1,0 +1,52 @@
+* {
+    font-family: 'Smooch Sans', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    font-size: 3vw;
+    color: white;
+}
+
+body {
+    background-color: black;
+}
+
+.scroll-area {
+    background-color: black;
+}
+
+.callout {
+    background: black;
+    padding: 1vw 2vw;
+    z-index: 999;
+}
+
+#main-title {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+}
+
+#tyler {
+    text-align: center;
+    font-family: 'Sarpanch', sans-serif;
+    font-weight: 800;
+    font-size: 15vw;
+    width: 55vw;
+    line-height: 12vw;
+    transform-style: preserve-3d;
+}
+
+#tyler::after {
+    content: attr(data-content);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    text-shadow: 0 0 20px black;
+}
+
