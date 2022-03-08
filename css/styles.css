@@ -31,22 +31,29 @@ body {
     gap: 5vw;
 }
 
-#tyler {
+#name-container {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.large-name {
+    position: relative;
     text-align: center;
     font-family: 'Sarpanch', sans-serif;
     font-weight: 800;
     font-size: 15vw;
     width: 55vw;
     line-height: 12vw;
-    transform-style: preserve-3d;
 }
 
-#tyler::after {
+.large-name::after {
+    text-align: center;
     content: attr(data-content);
     position: absolute;
     top: 0;
     left: 0;
     color: white;
+    width: 100%;
     text-shadow: 0 0 20px black;
 }
 
