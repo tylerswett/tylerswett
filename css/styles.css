@@ -9,6 +9,8 @@
 
 body {
     background-color: black;
+    overflow: hidden;
+    position: fixed;
 }
 
 .link-holder a:last-of-type {
@@ -17,9 +19,9 @@ body {
 
 .link-holder a {
     display: inline-block;
-    margin-right: 20px;
-    width: 50px;
-    height:50px;
+    margin-right: 2vw;
+    width: 4vw;
+    height: 4vw;
 }
 
 .scroll-area {
@@ -28,6 +30,7 @@ body {
 }
 
 .callout {
+    text-align: center;
     background: black;
     padding: 1vw 2vw;
     z-index: 999;
@@ -35,7 +38,7 @@ body {
 
 #main-title {
     width: 100vw;
-    height: 100vh;
+    height: var(--app-height);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -49,6 +52,7 @@ body {
 }
 
 .large-name {
+    z-index: 1;;
     position: relative;
     text-align: center;
     font-family: 'Sarpanch', sans-serif;
@@ -67,4 +71,46 @@ body {
     color: white;
     width: 100%;
     text-shadow: 0 0 20px black;
+}
+
+@media only screen and (min-aspect-ratio: 6/3) {
+    #main-title {
+        gap: 4vh;
+    }
+
+    .large-name {
+        position: relative;
+        text-align: center;
+        font-family: 'Sarpanch', sans-serif;
+        font-weight: 800;
+        font-size: 22vh;
+        width: 55vw;
+        line-height: 20vh;
+    }
+}
+
+@media only screen and (max-aspect-ratio: 3/5) {
+    * {
+        font-size: 6vw;
+    }
+    
+    #main-title {
+        gap: 5vh;
+    }
+
+    .large-name {
+        position: relative;
+        text-align: center;
+        font-family: 'Sarpanch', sans-serif;
+        font-weight: 800;
+        font-size: 23vw;
+        width: 100vw;
+        line-height: 21vw;
+    }
+
+    .link-holder a {
+        width: 10vw;
+        height: 10vw;
+        margin-right: 4vw;
+    } 
 }

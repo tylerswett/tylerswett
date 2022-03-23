@@ -6,15 +6,15 @@ const MAX_Y_ROTATION = 30;
 let largeNameItems = document.querySelectorAll(".large-name");
 let nameContainer = document.getElementById("name-container");
 
-let windowHeight = window.innerHeight;
-let windowWidth = window.innerWidth;
-
-window.addEventListener('resize', updateHeightWidth);
-
+let windowHeight, windowWidth;
 function updateHeightWidth() {
     windowHeight = window.innerHeight;
     windowWidth = window.innerWidth;
+    const doc = document.documentElement
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`)
 }
+window.addEventListener('resize', updateHeightWidth);
+updateHeightWidth();
 
 document.addEventListener('mousemove', mouseTouchMove)
 document.addEventListener('touchstart', mouseTouchMove)
@@ -22,14 +22,12 @@ document.addEventListener('touchmove', mouseTouchMove)
 
 let percentFromCenterX, percentFromCenterY;
 function mouseTouchMove(e) {
-    console.log(e);
     // Clear existing logic for 
     clearInterval(returnAnimationTimer);
     returning = false;
 
     let x, y;
     if(e.touches) {
-        console.log("mobile");
         x = e.touches[0].clientX;
         y = e.touches[0].clientY;
     } else {
@@ -53,14 +51,6 @@ function mouseTouchMove(e) {
     }
 
     update3dPositionAndShadow(percentFromCenterX, percentFromCenterY);
-}
-
-function touchStart(e) {
-
-}
-
-function touchMove(e) {
-
 }
 
 function update3dPositionAndShadow(percentFromCenterX, percentFromCenterY) {     
