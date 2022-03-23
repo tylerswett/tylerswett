@@ -17,16 +17,19 @@ function updateHeightWidth() {
 }
 
 document.addEventListener('mousemove', mouseTouchMove)
+document.addEventListener('touchstart', mouseTouchMove)
 document.addEventListener('touchmove', mouseTouchMove)
 
 let percentFromCenterX, percentFromCenterY;
 function mouseTouchMove(e) {
+    console.log(e);
     // Clear existing logic for 
     clearInterval(returnAnimationTimer);
     returning = false;
 
     let x, y;
     if(e.touches) {
+        console.log("mobile");
         x = e.touches[0].clientX;
         y = e.touches[0].clientY;
     } else {
