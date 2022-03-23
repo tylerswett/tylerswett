@@ -16,29 +16,53 @@ function updateHeightWidth() {
     windowWidth = window.innerWidth;
 }
 
-document.addEventListener('mousemove', updateShadow)
-document.addEventListener('touchstart', updateShadow);
-document.addEventListener('touchend', removeShadow)
+document.addEventListener('mousemove', mouseTouchMove)
+document.addEventListener('touchmove', mouseTouchMove)
 
-let shadowX, shadowY;
-function updateShadow(e) {
+let percentFromCenterX, percentFromCenterY;
+function mouseTouchMove(e) {
+    // Clear existing logic for 
+    clearInterval(returnAnimationTimer);
+    returning = false;
+
+    let x, y;
+    if(e.touches) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+    } else {
+        x = e.clientX;
+        y = e.clientY;
+    }
+
     let screenXCenter = window.innerWidth/2;
     let screenYCenter = window.innerHeight/2;
 
-    let percentFromCenterX, percentFromCenterY;
-    if(e.clientX <= screenXCenter) {
-        percentFromCenterX = ((screenXCenter-e.clientX)/screenXCenter)*-1;
+    if(x <= screenXCenter) {
+        percentFromCenterX = ((screenXCenter-x)/screenXCenter)*-1;
     } else {
-        percentFromCenterX = (e.clientX-screenXCenter)/screenXCenter;
+        percentFromCenterX = (x-screenXCenter)/screenXCenter;
     }
 
-    if(e.clientY <= screenYCenter) {
-        percentFromCenterY = ((screenYCenter-e.clientY)/screenYCenter)*-1;
+    if(y <= screenYCenter) {
+        percentFromCenterY = ((screenYCenter-y)/screenYCenter)*-1;
     } else {
-        percentFromCenterY = (e.clientY-screenYCenter)/screenYCenter;
+        percentFromCenterY = (y-screenYCenter)/screenYCenter;
     }
 
+    update3dPositionAndShadow(percentFromCenterX, percentFromCenterY);
+}
 
+function touchStart(e) {
+
+}
+
+function touchMove(e) {
+
+}
+
+function update3dPositionAndShadow(percentFromCenterX, percentFromCenterY) {     
+    //Update the shadows based on the percent from screen center
+    let shadowX, shadowY, rotateX, rotateY;
     shadowX = percentFromCenterX * MAX_X_STRETCH;
     shadowY = percentFromCenterY * MAX_Y_STRETCH;
     rotateY = percentFromCenterX * MAX_Y_ROTATION * -1;
@@ -55,17 +79,39 @@ function updateShadow(e) {
     nameContainer.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) perspective(200px)`;
 }
 
-function touchStart(e) {
+// check every 1 second if there was any movement
+let lastPercentX, lastPercentY, returning = false;
+setInterval(() => {
+    if(lastPercentX==percentFromCenterX && lastPercentY==percentFromCenterY && returning==false) {
+        returning = true;
+        returnShadowToCenter();
+    }
 
+    lastPercentX = percentFromCenterX;
+    lastPercentY = percentFromCenterY;
+}, 1000)
+
+let returnAnimationTimer;
+function returnShadowToCenter() {
+    let step = 0;
+    let amountToDecreaseX = percentFromCenterX / 50;
+    let amountToDecreaseY = percentFromCenterY / 50;
+    returnAnimationTimer = setInterval(() => {
+        if(step<50) {
+            percentFromCenterX -= amountToDecreaseX;
+            percentFromCenterY -= amountToDecreaseY;
+            update3dPositionAndShadow(percentFromCenterX, percentFromCenterY);
+            step++;
+        } else {
+            clearInterval(returnAnimationTimer);
+        }
+        
+    }, 10);
 }
 
-function touchMove(e) {
 
-}
 
-function removeShadow(e) {
 
-}
 
 function generateShadow(x,y) {
     let colorList = [];
